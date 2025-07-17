@@ -1,13 +1,14 @@
 import type { NextConfig } from "next";
+import path from "path";
 
 const nextConfig: NextConfig = {
   // Performance optimizations
   compress: true,
   poweredByHeader: false,
-  
+
   // Output directory configuration to avoid permission issues
   distDir: './.next-build',
-  
+
   // Security headers
   async headers() {
     return [
@@ -38,27 +39,34 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  
+
   // Image optimization
   images: {
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 60,
   },
-  
+
   // Experimental features
   experimental: {
     optimizePackageImports: ['lucide-react'],
   },
-  
-  // Bundle analyzer (only in development)
-  ...(process.env.ANALYZE === 'true' && {
-    webpack: (config: any) => {
-      config.plugins.push(
-        new (require('webpack-bundle-analyzer').BundleAnalyzerPlugin)()
-      );
-      return config;
-    },
-  }),
+
+  // Webpack alias ve bundle analyzer birlikte
+  webpack: (config, { isServer }) => {
+    // Alias tanımı
+    config.resolve.alias = {
+      ...(config.resolve.alias || {}),
+      "@": path.resolve(__dirname, "src"),
+    };
+
+    // Bundle analyzer opsiyonu
+    if (process.env.ANALYZE === 'true') {
+      const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+      config.plugins.push(new BundleAnalyzerPlugin());
+    }
+
+    return config;
+  }
 };
 
 export default nextConfig;
