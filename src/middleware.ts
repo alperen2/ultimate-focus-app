@@ -6,7 +6,10 @@ export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith('/api/auth') || 
       request.nextUrl.pathname.startsWith('/auth/')) {
     
-    const ip = request.ip ?? request.headers.get('x-forwarded-for') ?? 'anonymous'
+    const ip = request.headers.get('x-forwarded-for') ?? 
+              request.headers.get('x-real-ip') ?? 
+              request.headers.get('cf-connecting-ip') ?? 
+              'anonymous'
     const limit = await rateLimit(ip, request.nextUrl.pathname)
     
     if (!limit.success) {

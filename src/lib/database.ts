@@ -6,6 +6,7 @@ import { supabase } from './supabase';
 import { DatabaseError } from './errors';
 import type { Database } from './supabase';
 import type { RealtimeChannel, RealtimePostgresChangesPayload } from '@supabase/supabase-js';
+import type { Session, Task } from '../types';
 
 type Tables = Database['public']['Tables'];
 

@@ -100,7 +100,7 @@ export function memoize<T extends (...args: never[]) => unknown>(
       return cache.get(key);
     }
     
-    const result = fn(...args);
+    const result = fn(...args) as ReturnType<T>;
     cache.set(key, result);
     
     return result;

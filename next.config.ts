@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   compress: true,
   poweredByHeader: false,
   
+  // Output directory configuration to avoid permission issues
+  distDir: './.next-build',
+  
   // Security headers
   async headers() {
     return [
