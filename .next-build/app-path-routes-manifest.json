@@ -1,7 +1,7 @@
 {
-  "/favicon.ico/route": "/favicon.ico",
   "/_not-found/page": "/_not-found",
   "/auth/callback/route": "/auth/callback",
+  "/favicon.ico/route": "/favicon.ico",
   "/auth/reset-password/page": "/auth/reset-password",
   "/page": "/"
 }

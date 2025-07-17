@@ -12,8 +12,8 @@
       "static/chunks/4bd1b696-206fc502234e8e5e.js",
       "static/chunks/684-215de833a2914fe8.js",
       "static/chunks/main-app-612a77c031a32bf5.js",
-      "static/css/ac40b044174f51f5.css",
-      "static/chunks/800-e7accabcb912f37f.js",
+      "static/css/8d02866233f15b76.css",
+      "static/chunks/800-371673704d18c9e4.js",
       "static/chunks/app/layout-fb7a27200242af65.js"
     ],
     "/auth/callback/route": [
@@ -28,7 +28,7 @@
       "static/chunks/4bd1b696-206fc502234e8e5e.js",
       "static/chunks/684-215de833a2914fe8.js",
       "static/chunks/main-app-612a77c031a32bf5.js",
-      "static/chunks/800-e7accabcb912f37f.js",
+      "static/chunks/800-371673704d18c9e4.js",
       "static/chunks/app/auth/reset-password/page-de121b3fb01d8c65.js"
     ],
     "/page": [
@@ -36,7 +36,7 @@
       "static/chunks/4bd1b696-206fc502234e8e5e.js",
       "static/chunks/684-215de833a2914fe8.js",
       "static/chunks/main-app-612a77c031a32bf5.js",
-      "static/chunks/800-e7accabcb912f37f.js",
+      "static/chunks/800-371673704d18c9e4.js",
       "static/chunks/938-1b780ddb80cdc18a.js",
       "static/chunks/app/page-9ed2d9b2c5975d03.js"
     ]
