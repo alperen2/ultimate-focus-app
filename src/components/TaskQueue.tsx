@@ -10,6 +10,7 @@ interface TaskQueueProps {
   darkMode: boolean;
   categories: CategoryType[];
   priorities: PriorityType[];
+  isAddingTask?: boolean;
   onNewTaskChange: (task: string) => void;
   onCategoryChange: (category: CategoryType) => void;
   onPriorityChange: (priority: PriorityType) => void;
@@ -28,6 +29,7 @@ export default function TaskQueue({
   darkMode,
   categories,
   priorities,
+  isAddingTask = false,
   onNewTaskChange,
   onCategoryChange,
   onPriorityChange,
@@ -58,20 +60,20 @@ export default function TaskQueue({
                 ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
                 : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
             }`}
-            onKeyPress={(e) => e.key === 'Enter' && onAddToQueue()}
+            onKeyPress={(e) => e.key === 'Enter' && !isAddingTask && onAddToQueue()}
           />
           
           <button
             onClick={onAddToQueue}
-            disabled={!newQueueTask.trim()}
+            disabled={!newQueueTask.trim() || isAddingTask}
             className={`px-6 py-3 rounded-lg font-medium transition-all duration-200 flex items-center justify-center gap-2 ${
-              !newQueueTask.trim()
+              !newQueueTask.trim() || isAddingTask
                 ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
                 : 'bg-indigo-600 text-white hover:bg-indigo-700 active:bg-indigo-800 shadow-md hover:shadow-lg'
             }`}
           >
             <Plus className="w-5 h-5" />
-            <span className="hidden sm:inline">Add Task</span>
+            <span className="hidden sm:inline">{isAddingTask ? 'Adding...' : 'Add Task'}</span>
           </button>
         </div>
         

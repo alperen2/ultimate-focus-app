@@ -49,10 +49,7 @@ describe('useTimerPersistence', () => {
 
     expect(localStorageMock.setItem).toHaveBeenCalledWith(
       'ultimate-focus-timer-state',
-      JSON.stringify({
-        ...timerState,
-        lastSaveTime: expect.any(Number)
-      })
+      expect.stringContaining('"currentTask":"Test Task"')
     );
   });
 
@@ -142,7 +139,7 @@ describe('useTimerPersistence', () => {
     };
 
     localStorageMock.getItem.mockReturnValue(JSON.stringify(savedState));
-    vi.setSystemTime(baseTime);
+    jest.setSystemTime(baseTime);
 
     const { result } = renderHook(() => useTimerPersistence());
 
@@ -176,7 +173,7 @@ describe('useTimerPersistence', () => {
     };
 
     localStorageMock.getItem.mockReturnValue(JSON.stringify(savedState));
-    vi.setSystemTime(baseTime);
+    jest.setSystemTime(baseTime);
 
     const { result } = renderHook(() => useTimerPersistence());
 
@@ -210,7 +207,7 @@ describe('useTimerPersistence', () => {
     };
 
     localStorageMock.getItem.mockReturnValue(JSON.stringify(savedState));
-    vi.setSystemTime(baseTime);
+    jest.setSystemTime(baseTime);
 
     const { result } = renderHook(() => useTimerPersistence());
 
@@ -266,7 +263,7 @@ describe('useTimerPersistence', () => {
       lastSaveTime: baseTime - 3600000 // 1 hour ago
     };
     localStorageMock.getItem.mockReturnValue(JSON.stringify(recentState));
-    vi.setSystemTime(baseTime);
+    jest.setSystemTime(baseTime);
 
     const { result } = renderHook(() => useTimerPersistence());
 

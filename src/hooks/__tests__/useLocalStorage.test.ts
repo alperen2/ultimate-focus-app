@@ -1,10 +1,24 @@
 import { renderHook, act } from '@testing-library/react';
 import { useLocalStorage } from '../useLocalStorage';
 
+const localStorageMock = {
+  getItem: jest.fn(),
+  setItem: jest.fn(),
+  removeItem: jest.fn(),
+  clear: jest.fn()
+} as jest.Mocked<Storage>;
+
+// Override global localStorage with our mock
+Object.defineProperty(window, 'localStorage', {
+  value: localStorageMock
+});
+
 describe('useLocalStorage', () => {
   beforeEach(() => {
-    localStorage.clear();
-    jest.clearAllMocks();
+    localStorageMock.clear.mockClear();
+    localStorageMock.getItem.mockClear();
+    localStorageMock.setItem.mockClear();
+    localStorageMock.removeItem.mockClear();
   });
 
   it('should return default value when localStorage is empty', () => {
@@ -14,7 +28,8 @@ describe('useLocalStorage', () => {
   });
 
   it('should return parsed value from localStorage', () => {
-    localStorage.setItem('test-key', JSON.stringify('stored-value'));
+    localStorageMock.setItem('test-key', JSON.stringify('stored-value'));
+    localStorageMock.getItem.mockReturnValue(JSON.stringify('stored-value'));
     
     const { result } = renderHook(() => useLocalStorage('test-key', 'default'));
     
@@ -29,7 +44,7 @@ describe('useLocalStorage', () => {
     });
     
     expect(result.current[0]).toBe('updated-value');
-    expect(localStorage.setItem).toHaveBeenCalledWith('test-key', JSON.stringify('updated-value'));
+    expect(localStorageMock.setItem).toHaveBeenCalledWith('test-key', JSON.stringify('updated-value'));
   });
 
   it('should handle complex objects', () => {
@@ -43,11 +58,11 @@ describe('useLocalStorage', () => {
     });
     
     expect(result.current[0]).toEqual(newValue);
-    expect(localStorage.setItem).toHaveBeenCalledWith('test-object', JSON.stringify(newValue));
+    expect(localStorageMock.setItem).toHaveBeenCalledWith('test-object', JSON.stringify(newValue));
   });
 
   it('should handle JSON parse errors gracefully', () => {
-    localStorage.setItem('test-key', 'invalid-json');
+    localStorageMock.getItem.mockReturnValue('invalid-json');
     
     const { result } = renderHook(() => useLocalStorage('test-key', 'default'));
     

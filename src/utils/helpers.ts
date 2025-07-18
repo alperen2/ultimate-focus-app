@@ -1,9 +1,12 @@
 // Helper functions for the Ultimate Focus App
 
 export const formatTime = (seconds: number): string => {
-  const mins = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  const isNegative = seconds < 0;
+  const absoluteSeconds = Math.abs(seconds);
+  const mins = Math.floor(absoluteSeconds / 60);
+  const secs = absoluteSeconds % 60;
+  const formatted = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  return isNegative ? `-${formatted}` : formatted;
 };
 
 export const getPriorityColor = (priority: string, darkMode: boolean): string => {

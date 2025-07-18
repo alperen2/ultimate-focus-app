@@ -149,19 +149,19 @@ describe('Timer Component', () => {
   it('should render task input when not on break', () => {
     render(<Timer {...defaultProps} />);
     
-    expect(screen.getByPlaceholderText('What are you focusing on?')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('What will you accomplish in this session?')).toBeInTheDocument();
   });
 
   it('should not render task input when on break', () => {
     render(<Timer {...defaultProps} isBreak={true} />);
     
-    expect(screen.queryByPlaceholderText('What are you focusing on?')).not.toBeInTheDocument();
+    expect(screen.queryByPlaceholderText('What will you accomplish in this session?')).not.toBeInTheDocument();
   });
 
   it('should call onTaskChange when task input changes', () => {
     render(<Timer {...defaultProps} />);
     
-    const input = screen.getByPlaceholderText('What are you focusing on?');
+    const input = screen.getByPlaceholderText('What will you accomplish in this session?');
     fireEvent.change(input, { target: { value: 'New task' } });
     
     expect(defaultProps.onTaskChange).toHaveBeenCalledWith('New task');
@@ -185,7 +185,7 @@ describe('Timer Component', () => {
   it('should disable task input and category select when running', () => {
     render(<Timer {...defaultProps} isRunning={true} />);
     
-    const input = screen.getByPlaceholderText('What are you focusing on?');
+    const input = screen.getByPlaceholderText('What will you accomplish in this session?');
     const select = screen.getByDisplayValue(/work/i);
     
     expect(input).toBeDisabled();
@@ -244,7 +244,7 @@ describe('Timer Component', () => {
   it('should display current task value', () => {
     render(<Timer {...defaultProps} currentTask="Write tests" />);
     
-    const input = screen.getByPlaceholderText('What are you focusing on?');
+    const input = screen.getByPlaceholderText('What will you accomplish in this session?');
     expect(input).toHaveValue('Write tests');
   });
 

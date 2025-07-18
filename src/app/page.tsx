@@ -229,6 +229,7 @@ function AuthenticatedApp() {
               darkMode={settings.darkMode}
               categories={categories}
               priorities={priorities}
+              isAddingTask={taskQueue.isAddingTask}
               onNewTaskChange={taskQueue.setNewQueueTask}
               onCategoryChange={taskQueue.setQueueTaskCategory}
               onPriorityChange={taskQueue.setQueueTaskPriority}

@@ -48,23 +48,32 @@ export function useUltimateFocusAppWithAuth() {
   const [queueTaskCategory, setQueueTaskCategory] = useState<CategoryType>('work');
   const [queueTaskPriority, setQueueTaskPriority] = useState<'low' | 'medium' | 'high' | 'urgent'>('medium');
 
+  const [isAddingTask, setIsAddingTask] = useState(false);
+
   const handleAddToQueue = async () => {
-    if (!newQueueTask.trim()) return;
+    if (!newQueueTask.trim() || isAddingTask) return;
 
-    const newTask = await addTask({
-      text: newQueueTask.trim(),
-      description: '',
-      projectId: undefined,
-      category: queueTaskCategory,
-      priority: queueTaskPriority,
-      completed: false,
-      estimatedPomodoros: 1,
-      completedPomodoros: 0,
-      dueDate: undefined
-    });
+    setIsAddingTask(true);
+    try {
+      const newTask = await addTask({
+        text: newQueueTask.trim(),
+        description: '',
+        projectId: undefined,
+        category: queueTaskCategory,
+        priority: queueTaskPriority,
+        completed: false,
+        estimatedPomodoros: 1,
+        completedPomodoros: 0,
+        dueDate: undefined
+      });
 
-    if (newTask) {
-      setNewQueueTask('');
+      if (newTask) {
+        setNewQueueTask('');
+      }
+    } catch (error) {
+      console.error('Failed to add task:', error);
+    } finally {
+      setIsAddingTask(false);
     }
   };
 
@@ -175,6 +184,7 @@ export function useUltimateFocusAppWithAuth() {
     queueTaskPriority,
     setQueueTaskPriority,
     handleAddToQueue,
+    isAddingTask,
     tasks,
     removeTask,
     handleMoveToCurrentTask
